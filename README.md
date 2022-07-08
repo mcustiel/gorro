@@ -11,10 +11,12 @@ import (
 
 func getHandler(w http.ResponseWriter, r *gorro.Request) error {
   w.Write([]byte("GET Hello World"))
+  return nil
 }
 
 func postHandler(w http.ResponseWriter, r *gorro.Request) error {
   w.Write([]byte("POST Hello World"))
+  return nil
 }
 
 
