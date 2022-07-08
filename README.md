@@ -22,20 +22,20 @@ func postHandler(w http.ResponseWriter, r *gorro.Request) error {
 
 
 func main() {
-  rtr := gorro.NewRouter()
+    rtr := gorro.NewRouter()
 
-  err := rtr.Register(`/hello`, gorro.HandlersMap{
-		http.MethodPost: postHandler,
-		http.MethodGet:  getHandler})
+    err := rtr.Register(`/hello`, gorro.HandlersMap{
+        http.MethodPost: postHandler,
+        http.MethodGet:  getHandler})
     
-	if err != nil {
-		panic(err)
-	}
+    if err != nil {
+        panic(err)
+    }
 
-  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    rtr.Route(w, r)
-  })
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        rtr.Route(w, r)
+    })
 
-  http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":8080", nil)
 }
 ```
