@@ -7,10 +7,11 @@ Stupid simple go router for my demo projects
 import (
   "github.com/mcustiel/gorro"
   "net/http"
+  "fmt"
 )
 
 func getHandler(w http.ResponseWriter, r *gorro.Request) error {
-  w.Write([]byte("GET Hello World"))
+  w.Write([]byte(fmt.Sprintf("GET Hello %s", r.NamedParams["name"])))
   return nil
 }
 
@@ -24,7 +25,7 @@ func postHandler(w http.ResponseWriter, r *gorro.Request) error {
 func main() {
     rtr := gorro.NewRouter()
 
-    err := rtr.Register(`/hello`, gorro.HandlersMap{
+    err := rtr.Register(`/hello/(?P<name>[a-z]+)`, gorro.HandlersMap{
         http.MethodPost: postHandler,
         http.MethodGet:  getHandler})
     
