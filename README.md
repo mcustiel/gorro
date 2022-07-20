@@ -11,32 +11,32 @@ import (
 )
 
 func getHandler(w http.ResponseWriter, r *gorro.Request) error {
-  w.Write([]byte(fmt.Sprintf("GET Hello %s", r.NamedParams["name"])))
+  fmt.Fprintf(w, "GET Hello %s", r.NamedParams["name"])
   return nil
 }
 
 func postHandler(w http.ResponseWriter, r *gorro.Request) error {
-  w.Write([]byte("POST Hello World"))
+  fmt.Fprint(w, "POST Hello World")
   return nil
 }
 
 
 
 func main() {
-    rtr := gorro.NewRouter()
+  rtr := gorro.NewRouter()
 
-    err := rtr.Register(`/hello/(?P<name>[a-z]+)`, gorro.HandlersMap{
-        http.MethodPost: postHandler,
-        http.MethodGet:  getHandler})
-    
-    if err != nil {
-        panic(err)
-    }
+  err := rtr.Register(`/hello/(?P<name>[a-z]+)`, gorro.HandlersMap{
+    http.MethodPost: postHandler,
+    http.MethodGet:  getHandler})
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        rtr.Route(w, r)
-    })
+  if err != nil {
+    panic(err)
+  }
 
-    http.ListenAndServe(":8080", nil)
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    rtr.Route(w, r)
+  })
+
+  http.ListenAndServe(":8080", nil)
 }
 ```
