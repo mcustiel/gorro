@@ -1,5 +1,5 @@
 # gorro
-Stupid simple go router for my demo projects
+Stupid simple go router for my demo projects. Allows to configure routes using regular expressions.
 
 ## Usage example
 
